@@ -1,8 +1,13 @@
 90-Day Software Engineering Bootcamp
+
 Week 1 – Java & Programming Fundamentals Theme
 
 Understanding How Programs Work
+DAY 1
+Mission
+From Java Code to Running Program
 
+Understand what actually happens between writing Java code and seeing the output on your screen.
 Day - 1 question
 
 How does Java code become a running program?
