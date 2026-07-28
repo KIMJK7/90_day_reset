@@ -8,7 +8,7 @@ public class StudentResultManagementSystem {
         boolean stu = true;
         while (stu) {
             System.out.println("Enter Name of Student:");
-            String name = sc.next();
+            String name = sc.nextLine();
 
             System.out.println("Enter Roll No. of Student:");
             String rollNo = sc.next();
@@ -54,8 +54,12 @@ public class StudentResultManagementSystem {
                 System.out.println("Fail");
             }
 
-            System.out.println("Next Student?");
-            stu = sc.nextBoolean();
+            System.out.print("Add another student? (Y/N): ");
+            char choice = sc.next().charAt(0);
+
+            if (choice == 'N' || choice == 'n') {
+                stu = false;
+            }
 
         }
         sc.close();
