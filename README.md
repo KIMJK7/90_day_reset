@@ -289,3 +289,70 @@ A loop is like doing push-ups:
   statement.
 - Assuming a `while` loop always executes at least once (only
   `do-while` guarantees this).
+
+# Why do Methods Exist, and How Does Java Use Them to Organize and Execute Code?
+
+A **method** is a reusable block of code that performs a specific task. Instead of writing every statement inside the `main()` method, Java allows programmers to divide a program into smaller, well-defined methods. Each method is responsible for a single task, making the program easier to understand and maintain.
+
+## Why Do Methods Exist?
+
+Methods exist to improve the quality and organization of code by:
+
+- **Improving readability** – Large programs become easier to understand when broken into smaller methods.
+- **Increasing modularity** – Each method performs one specific task, making the program well-organized.
+- **Promoting code reuse** – A method can be written once and called multiple times, reducing duplicate code.
+- **Simplifying debugging** – Bugs can be isolated and fixed within a specific method.
+- **Making updates easier** – Changes to a method automatically affect every place where it is called.
+- **Improving testing** – Individual methods can be tested independently.
+
+Without methods, most of the program's logic would have to be written inside `main()`, making the code long, difficult to read, and harder to maintain.
+
+## How Does Java Use Methods to Organize Code?
+
+Java organizes programs by dividing them into methods, where each method has a specific responsibility.
+
+For example:
+
+- `getInput()` collects user input.
+- `calculateTotal()` performs calculations.
+- `displayResult()` prints the output.
+
+The `main()` method acts as the starting point of the program and coordinates the execution by calling these methods in the required order.
+
+This modular design makes programs easier to develop, understand, test, and maintain.
+
+## How Does Java Execute a Method?
+
+Consider the following program:
+
+```java
+public class Example {
+
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        int result = add(5, 10);
+        System.out.println(result);
+    }
+}
+```
+
+### Execution Steps
+
+1. The JVM starts executing the program from the `main()` method.
+2. It encounters the method call `add(5, 10)`.
+3. A new **stack frame** is created on the **call stack** for the `add()` method.
+4. The arguments are copied into the parameters:
+   - `a = 5`
+   - `b = 10`
+5. The method executes its instructions and computes `5 + 10`.
+6. The `return` statement sends the value `15` back to the calling method.
+7. The `add()` method finishes, and its stack frame is removed from the call stack.
+8. Execution returns to `main()`, where the returned value is stored in the variable `result`.
+9. The program continues executing the remaining statements.
+
+## Summary
+
+Methods help Java organize programs by breaking complex problems into smaller, reusable tasks. The JVM executes methods by creating a new stack frame for each method call, running its instructions, returning any required value, removing the stack frame, and then continuing execution from the point where the method was called.
