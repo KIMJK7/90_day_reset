@@ -357,104 +357,368 @@ public class Example {
 
 Methods help Java organize programs by breaking complex problems into smaller, reusable tasks. The JVM executes methods by creating a new stack frame for each method call, running its instructions, returning any required value, removing the stack frame, and then continuing execution from the point where the method was called.
 
-What happens if Method A calls Method B, Method B calls Method C, and Method C throws an exception before returning?
-When MethodC throws an exception, it does not return normally. Instead, the JVM begins stack unwinding. It checks whether MethodC can handle the exception with a matching catch block. If not, MethodC's stack frame is removed, and the exception is propagated to MethodB. This process continues up the call stack until a matching catch block is found. If no method handles the exception, it reaches main(), the program terminates, and the JVM prints a stack trace.
+# Day 5 Notes – Arrays (Deep Understanding)
 
-> MethodC() throws
-> ↓
-> MethodC frame removed
-> ↓
-> MethodB checks for catch
-> ↓
-> No catch
-> ↓
-> MethodB frame removed
-> ↓
-> MethodA checks
-> ↓
-> No catch
-> ↓
-> MethodA frame removed
-> ↓
-> main() checks
+# What Happens if Method A Calls Method B, Method B Calls Method C, and Method C Throws an Exception Before Returning?
 
-How do arrays work internally, and why are they one of the fundamental building blocks of programming?
+When `MethodC()` throws an exception, it does **not** return normally.
 
-An array is an object in Java that stores multiple values of the same data type under a single variable name.
+Instead, the JVM begins a process called **stack unwinding**.
 
-When an array is created, Java allocates a fixed-size contiguous block of memory on the heap to store all of its elements. The array variable itself stores a reference to that array object. If the reference is a local variable, it is stored in the stack frame of the current method; the actual array object always lives on the heap.
+It checks whether `MethodC()` has a matching `catch` block.
 
-Each element in the array occupies the same amount of memory because all elements have the same data type. Since every element has a fixed size, Java can directly calculate the memory location of any element using its index, allowing constant-time (O(1)) random access.
+- If a matching `catch` block exists, the exception is handled there.
+- If not, `MethodC()`'s stack frame is removed from the call stack, and the exception is propagated to `MethodB()`.
 
-Internally, the address of an element can be thought of conceptually as:
+The JVM repeats this process for every calling method until:
 
-Target Address = Base Address + (Index × Size of Each Element)
+- a matching `catch` block is found, or
+- the exception reaches `main()`.
 
-For example:
+If no method handles the exception, the program terminates and the JVM prints a **stack trace**, showing the sequence of method calls that led to the exception.
 
-                 Base Address
-                      ↓
+## Stack Unwinding
+
+```
+MethodA()
+    ↓
+MethodB()
+    ↓
+MethodC()
+    ↓
+Exception Thrown
+    ↓
+MethodC frame removed
+    ↓
+MethodB checks for catch
+    ↓
+No catch found
+    ↓
+MethodB frame removed
+    ↓
+MethodA checks for catch
+    ↓
+No catch found
+    ↓
+MethodA frame removed
+    ↓
+main() checks
+    ↓
+No catch found
+    ↓
+Program Terminates
+    ↓
+Stack Trace Printed
+```
+
+---
+
+# How Do Arrays Work Internally, and Why Are They One of the Fundamental Building Blocks of Programming?
+
+An **array** is an object in Java that stores multiple values of the **same data type** under a single variable name.
+
+When an array is created, Java allocates a **fixed-size contiguous block of memory** on the **Heap** to store all of its elements.
+
+The array variable itself stores a **reference** to the array object.
+
+- If the reference variable is local, it is stored in the **Stack**.
+- The actual array object always lives in the **Heap**.
+
+Example:
+
+```java
+int[] arr = {10, 20, 30, 40, 50};
+```
+
+Memory Representation:
+
+```
+Stack
+
+arr
+ |
+ |
+ v
+
+Heap
+
+        Base Address
+             ↓
 
 +------+------+------+------+------+
 | 10 | 20 | 30 | 40 | 50 |
 +------+------+------+------+------+
-0 1 2 3 4
-Index
+   0      1      2      3      4
+```
 
-If the base address points to the first element and each int occupies 4 bytes, then:
+Every element occupies the **same amount of memory** because every element has the same data type.
 
-arr[0] = Base + (0 × 4)
-arr[1] = Base + (1 × 4)
-arr[2] = Base + (2 × 4)
-arr[3] = Base + (3 × 4)
+Since every element has a fixed size, Java can directly calculate the location of any element using its index.
 
-This direct address calculation is why accessing an element by its index is very fast.
+Conceptually:
 
-Arrays are one of the fundamental building blocks of programming because they provide an efficient way to store and access collections of data. Many other data structures—such as ArrayLists, stacks, queues, heaps, hash tables, matrices, and dynamic arrays—are built on top of arrays or use arrays internally. Understanding arrays is essential because they form the foundation for many algorithms and more advanced data structures.
+```
+Target Address = Base Address + (Index × Size of Each Element)
+```
 
-Why are arrays zero-indexed?
+Example (assuming an `int` occupies 4 bytes):
 
-This question comes up surprisingly often.
+```
+arr[0]
 
-The conceptual answer is:
+Base + (0 × 4)
+
+arr[1]
+
+Base + (1 × 4)
+
+arr[2]
+
+Base + (2 × 4)
+
+arr[3]
+
+Base + (3 × 4)
+```
+
+Because Java can compute the address directly, accessing an element does not require searching through the array.
+
+Therefore:
+
+```
+Time Complexity
+
+O(1)
+```
+
+## Why Are Arrays One of the Fundamental Building Blocks of Programming?
+
+Arrays provide one of the simplest and most efficient ways to store and access collections of data.
+
+Many advanced data structures are built using arrays internally, including:
+
+- ArrayList
+- Dynamic Arrays
+- Stacks
+- Queues
+- Heaps
+- Hash Tables
+- Matrices
+- Graph Representations
+
+Understanding arrays is essential because they form the foundation of many algorithms and data structures used in programming.
+
+---
+
+# Why Are Arrays Zero-Indexed?
+
+Arrays start at **index 0** because the index represents the **offset (distance)** from the beginning of the array.
 
 Suppose:
 
+```
 Base Address = 1000
 
-Each int
+Size of int = 4 bytes
+```
 
-4 bytes
+First element:
 
-Then
-
+```
 arr[0]
 
 1000 + (0 × 4)
 
-=
+= 1000
+```
 
-1000
+Second element:
 
-The first element begins exactly at the base address.
-
-If arrays started at 1:
-
+```
 arr[1]
 
 1000 + (1 × 4)
 
-=
+= 1004
+```
 
-1004
+Third element:
 
-You'd have to subtract one from every index during address calculation.
+```
+arr[2]
 
-Zero-based indexing makes the offset from the beginning of the array equal to the index itself, simplifying the calculation.
+1000 + (2 × 4)
 
-If arrays are so fast, why does Java provide ArrayList?
+= 1008
+```
 
-Arrays are extremely fast because they store elements in a fixed-size contiguous block of memory, allowing constant-time indexed access. However, their size cannot change after creation. If more space is needed, a new array must be created and the existing elements copied into it. ArrayList solves this limitation by internally using an array that automatically resizes when it becomes full. This provides dynamic sizing and convenient operations such as add() and remove(), at the cost of occasional resizing and element copying. Therefore, arrays prioritize performance and simplicity, while ArrayList prioritizes flexibility and ease of use.
+The first element begins exactly at the base address, so its offset is **0**.
 
-If ArrayList uses an array internally, why is add(index, value) not always O(1)?
-ArrayList internally stores elements in an array. Accessing an element by index is O(1), just like an array. However, inserting an element at a specific index is O(n) because all subsequent elements must be shifted one position to the right to make space. Additionally, if the internal array becomes full, the ArrayList allocates a larger array and copies all elements into it before inserting the new value. Therefore, insertion at an index is O(n), while appending to the end is amortized O(1).
+If arrays started at index **1**, the calculation would become:
+
+```
+arr[1]
+
+1000 + (1 × 4)
+
+= 1004
+```
+
+But the first element is actually stored at address **1000**.
+
+The computer would therefore have to subtract **1** from every index before calculating the address.
+
+Zero-based indexing avoids this extra adjustment and makes address calculation simple and efficient.
+
+---
+
+# If Arrays Are So Fast, Why Does Java Provide ArrayList?
+
+Arrays are extremely fast because:
+
+- Elements are stored in contiguous memory.
+- Indexed access is O(1).
+- Memory layout is simple and efficient.
+
+However, arrays have one major limitation:
+
+**Their size cannot change after creation.**
+
+Example:
+
+```java
+int[] arr = new int[5];
+```
+
+This array can store exactly five elements.
+
+If you later need more space, Java cannot extend the existing memory block.
+
+Instead, it must:
+
+1. Allocate a larger array.
+2. Copy every element into the new array.
+3. Update the reference.
+4. Allow the old array to be garbage collected.
+
+This process is inconvenient for programmers.
+
+## ArrayList Solves This Problem
+
+`ArrayList` internally uses an array.
+
+When its internal array becomes full, it automatically:
+
+1. Creates a larger array.
+2. Copies all existing elements.
+3. Continues inserting new elements.
+
+This allows the collection to grow dynamically.
+
+Advantages of `ArrayList`:
+
+- Dynamic size
+- Convenient methods (`add()`, `remove()`, `contains()`, etc.)
+- Easier to use
+
+Trade-off:
+
+- Slightly slower than raw arrays due to resizing and additional logic.
+
+Arrays prioritize **performance**, while `ArrayList` prioritizes **flexibility**.
+
+---
+
+# If ArrayList Uses an Array Internally, Why Is `add(index, value)` Not Always O(1)?
+
+An `ArrayList` stores its elements inside an internal array.
+
+Because of this:
+
+```
+get(index)
+
+O(1)
+```
+
+Accessing an element is still constant time.
+
+However, inserting an element at a specific position is different.
+
+Example:
+
+```
+Before
+
+Index
+
+0   1   2   3
+
+A   B   C   D
+```
+
+Insert `"X"` at index `1`:
+
+```
+After
+
+Index
+
+0   1   2   3   4
+
+A   X   B   C   D
+```
+
+To make space for `"X"`:
+
+- `D` moves one position.
+- `C` moves one position.
+- `B` moves one position.
+
+Every element after the insertion point must be shifted.
+
+If there are `n` elements after the index, up to `n` shifts may occur.
+
+Therefore:
+
+```
+Time Complexity
+
+O(n)
+```
+
+## What Happens if the Internal Array Is Full?
+
+Suppose the internal array has reached its capacity.
+
+Before inserting a new element, the `ArrayList` must:
+
+1. Allocate a larger array.
+2. Copy every existing element.
+3. Insert the new value.
+
+Example:
+
+```
+Old Array
+
+A B C D
+
+↓
+
+Allocate Larger Array
+
+A B C D _
+```
+
+Copying every element also takes **O(n)** time.
+
+Therefore:
+
+- `get(index)` → **O(1)**
+- `set(index, value)` → **O(1)**
+- `add(value)` at the end → **Amortized O(1)**
+- `add(index, value)` → **O(n)**
+- `remove(index)` → **O(n)**
+
+The shifting of elements—and occasionally copying into a larger array—is why insertion at an arbitrary index is **not** constant time.
