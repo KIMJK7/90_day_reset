@@ -30,12 +30,14 @@ public class secondLargestElement {
         if (secMax == Integer.MIN_VALUE) {
 
             System.out.println("No Second Largest element ");
+        } else {
+            System.out.println("Second Largest element is " + secMax);
         }
-
-        System.out.println("Second Largest element is " + secMax);
 
         if (n < 2) {
             System.out.println("No Second Largest element ");
+            sc.close();
+            return;
         }
 
         int max2 = arr[0];
