@@ -222,3 +222,157 @@ They are of fixed size cause once we create an array we also allocate a contineo
 > Why does Java have ArrayList if arrays already exist?
 
 Arrays are fixed in size and provide fast indexing but cannot grow after creation. ArrayList is a resizable array implementation that automatically creates a larger internal array and copies the existing elements whenever additional capacity is needed. It also provides many built-in methods such as add(), remove(), contains(), and size(), making it more convenient for dynamic collections.
+
+---
+
+Part 3 - Debugging
+
+Find the bug.
+
+Question 1
+int[] arr = new int[5];
+
+for(int i=0;i<=arr.length;i++)
+System.out.println(arr[i]);
+
+Explain
+
+Error - i<=arr.length
+Why - out of bound by 1 index of array start with 0 and goes upto (arr.length - 1) so if we run a loop till arr.length it will give an error of out of bound
+Fix - i < arr.length
+
+Question 2
+int x;
+
+System.out.println(x);
+
+Why doesn't this compile?
+
+x is a local variable.
+
+Java does not initialize local variables automatically.
+
+They must be initialized before use.
+
+Question 3
+int[] nums = null;
+
+System.out.println(nums.length);
+
+Exception?
+NullPointerException, nums is a reference variable.
+
+It currently points to
+
+null
+
+meaning
+
+it refers to no object.
+
+So when Java tries
+
+nums.length
+
+it attempts to access a property of an object that doesn't exist.
+
+Hence
+
+NullPointerException
+
+Question 4
+public static void add(int a){
+
+a++;
+
+}
+
+public static void main(String[] args){
+
+int x=5;
+
+add(x);
+
+System.out.println(x);
+
+}
+
+Output? 5
+
+Why? because when we pass by value into a method it send a copy of the primitive value which is different from original variable so if any modification is done in the method it wont be reflected by to main.
+
+Question 5
+String s = "Hello";
+
+System.out.println(s.charAt(5));
+
+Exception? - StringIndexOutOfBoundsException
+
+Reason? - index starts with 0
+
+## Part 4 - Code Tracing
+
+Without running.
+
+Predict output.
+
+Question 1
+
+int x=5;
+
+System.out.println(x++);
+
+System.out.println(++x);
+
+output - 5
+7
+
+Question 2
+
+int a=10;
+
+if(a>5)
+
+if(a<20)
+
+System.out.println("A");
+
+else
+
+System.out.println("B");
+
+output = "A"
+
+Question 3
+
+int sum=0;
+
+for(int i=1;i<=5;i++)
+
+sum+=i;
+
+System.out.println(sum);
+
+output - 15
+
+## Part 5 - Design Thinking
+
+No coding.
+
+Explain.
+
+> If methods didn't exist, how would software change?
+
+If methods didn't exist, every program would have to be written inside a single block of code, such as main(). The same logic would need to be rewritten whenever it was required, leading to code duplication. Programs would become difficult to read, debug, test, and maintain. Reusing logic across different parts of the application would be almost impossible, making software development slower and more error-prone. Methods provide modularity, reusability, and better organization of code.
+
+> Why is main() not enough?
+
+main() is the entry point of a Java program, but it is not intended to contain all the program logic. While an entire program can technically be written inside main(), doing so would make the code difficult to read, debug, test, and maintain. Methods allow us to divide a program into smaller, reusable units, making the code modular and easier to manage.
+
+> Why don't we store everything in Heap?
+
+We don't store everything in the heap because accessing heap memory is slower and managing it is more expensive. The heap is designed for objects whose lifetime is not known in advance and is managed by the Garbage Collector. Simple data like local primitive variables, method parameters, and reference variables are short-lived, so storing them in the stack allows much faster allocation and automatic cleanup when a method finishes. Using the heap for everything would increase memory management overhead and reduce performance.
+
+> Why don't we store everything in Stack?
+
+We don't store everything in the stack because stack memory is limited and follows a Last-In-First-Out (LIFO) structure. Objects often need to survive after the method that created them returns or be shared between multiple methods or objects. If everything were stored in the stack, all objects would be destroyed as soon as their method ended, making it impossible to maintain data across method calls. The heap provides dynamic memory allocation for such long-lived objects.
