@@ -58,3 +58,87 @@ Student b = a;
 ```
 
 Both `a` and `b` point to the same object in the heap. Therefore, any changes made through one reference are visible through the other because they access the same object.
+
+# Java Classes, Objects & References
+
+## 1. What is a class?
+
+A **class** is a blueprint or template for creating objects. It defines the **fields (instance variables)** that an object will have and the **methods** (behaviors/actions) that can be performed on those fields. A class itself does not occupy memory for its objects until an object is created.
+
+---
+
+## 2. What is an object?
+
+An **object** is an instance of a class that is created in the **heap memory**. It contains its own **state (instance variables/fields)** and represents the actual data of the program. Objects use the methods defined in their class to perform operations on their data.
+
+> **Note:** Methods are defined in the class and shared by all objects of that class. Each object has its own copy of the instance variables, but not its own copy of the methods.
+
+---
+
+## 3. What is a reference?
+
+A **reference** is a variable that stores a **reference to an object** in the heap. Reference variables are typically stored in the **stack** (when they are local variables) and are used to access an object's fields and invoke its methods.
+
+> Java uses references rather than exposing actual memory addresses to the programmer.
+
+---
+
+## 4. Explain `Student s = new Student();` step by step.
+
+```java
+Student s = new Student();
+```
+
+### Step 1: Declaration
+
+```java
+Student s;
+```
+
+- A reference variable `s` is declared.
+- Since it is a local variable, it is stored in the **stack**.
+- At this point, no object has been created yet.
+- The reference is uninitialized until a value is assigned to it.
+
+### Step 2: Object Creation
+
+```java
+new Student();
+```
+
+- A new `Student` object is created in the **heap**.
+- The JVM allocates enough memory for all the object's instance variables.
+- Each instance variable is initialized with its default value.
+  - `int` → `0`
+  - `double` → `0.0`
+  - `boolean` → `false`
+  - Object references (e.g., `String`) → `null`
+
+### Step 3: Assignment
+
+```java
+s = new Student();
+```
+
+- The reference to the newly created object is assigned to `s`.
+- Now `s` can be used to access the object's fields and invoke its methods.
+
+---
+
+## 5. When does an object become eligible for Garbage Collection?
+
+An object becomes **eligible for Garbage Collection (GC)** when it is **no longer reachable** by any live reference in the program.
+
+In other words, if no reference variable points to an object and there is no way for the program to access it, the object becomes **eligible** for garbage collection.
+
+Example:
+
+```java
+Student s = new Student();
+
+s = null;
+```
+
+After assigning `null` to `s`, if no other reference points to that object, it becomes eligible for Garbage Collection.
+
+> **Important:** Being eligible for Garbage Collection does **not** mean the object is immediately removed from memory. The Garbage Collector decides when to reclaim its memory.
