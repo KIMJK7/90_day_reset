@@ -142,3 +142,38 @@ s = null;
 After assigning `null` to `s`, if no other reference points to that object, it becomes eligible for Garbage Collection.
 
 > **Important:** Being eligible for Garbage Collection does **not** mean the object is immediately removed from memory. The Garbage Collector decides when to reclaim its memory.
+
+# Question of the day
+
+## "What actually happens inside the JVM when we write new Student()?"
+
+Student s = new Student();
+
+        │
+        ▼
+
+1. JVM checks whether Student.class is loaded.
+   │
+   ▼
+
+2. If necessary, Class Loader loads the class.
+   │
+   ▼
+
+3. Heap memory is allocated for the object.
+   │
+   ▼
+
+4. Instance variables receive default values.
+   │
+   ▼
+
+5. Constructor executes.
+   │
+   ▼
+
+6. new Student() returns a reference.
+   │
+   ▼
+
+7. Reference assigned to s.
