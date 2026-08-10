@@ -1,5 +1,3 @@
-Yes. Based on your **Day 6 code** and what you learned about ownership, encapsulation, and `static` on Day 3, here’s how I’d answer them.
-
 ### 1. Why is it potentially better for `StudentManager` to own `Student[] students` instead of `Main` owning it?
 
 Because **`StudentManager` is responsible for managing students**.
