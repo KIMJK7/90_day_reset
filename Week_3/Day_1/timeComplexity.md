@@ -59,7 +59,7 @@ while (i < n) {
 }
 ```
 
-i - 1,2,4,6,8,...,(n-1);
+i - 1,2,4,8,16,...,(n-1);
 
 i = 2^k
 stoping criteria is

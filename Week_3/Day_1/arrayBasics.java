@@ -122,44 +122,54 @@ public class arrayBasics {
             return;
         }
         int n = nums.length;
-        int i = 0;
+        int left = 0;
+        int right = n - 1;
 
-        for (i = 0; i <= n / 2; i++) {
-            if (i != (n - 1) || i > (n - 1)) {
-                int temp = nums[i];
-                nums[i] = nums[n - 1];
-                nums[n - 1] = temp;
-                n--;
-            }
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
 
         }
     }
 
     // Find Second largest element in O(n) time complexit
-    static int secondLargestElement(int[] nums) {
-        if (nums.length == 0) {
-            System.out.println("No element found!");
-            return -1;
-        }
-        int n = nums.length;
-        int largest;
-        int secondLargest;
-        if (nums[0] >= nums[1]) {
-            largest = nums[0];
-            secondLargest = nums[1];
-        } else {
-            largest = nums[1];
-            secondLargest = nums[0];
+    // space complexity O(1)
+    // without sorting
+    static Integer secondLargestElement(int[] nums) {
+
+        if (nums.length < 2) {
+            System.out.println("No second largest element!");
+            return null;
         }
 
-        for (int i = 2; i < n; i++) {
-            if (largest < nums[i]) {
-                secondLargest = largest;
-                largest = nums[i];
-            } else if (secondLargest < nums[i] && nums[i] != largest) {
-                secondLargest = nums[i];
+        Integer largest = null;
+        Integer secondLargest = null;
+
+        for (int num : nums) {
+
+            // New largest found
+            if (largest == null || num > largest) {
+                if (largest != null) {
+                    secondLargest = largest;
+                }
+                largest = num;
+            }
+
+            // New second-largest distinct value
+            else if (num != largest &&
+                    (secondLargest == null || num > secondLargest)) {
+                secondLargest = num;
             }
         }
+
+        if (secondLargest == null) {
+            System.out.println("No second largest element!");
+            return null;
+        }
+
         return secondLargest;
     }
 
