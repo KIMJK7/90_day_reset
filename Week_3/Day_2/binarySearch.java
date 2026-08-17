@@ -8,24 +8,18 @@ public class binarySearch {
             return -1;
         }
         int middle = first + (last - first) / 2;
-        if (x == nums[first]) {
-            return first;
-        } else if (x == nums[last]) {
-            return last;
-        }
+
         if (x == nums[middle]) {
             return middle;
 
-        } else if (nums[middle] > x) {
+        } else if (x < nums[middle]) {
             // x is in 0 to middle
             return binarySearchElement(nums, x, first, middle - 1);
 
-        } else if (nums[middle] < x) {
+        } else {
             // x is in middle+1 to last
             return binarySearchElement(nums, x, middle + 1, last);
         }
-
-        return -1;
 
     }
 
