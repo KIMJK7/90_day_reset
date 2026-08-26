@@ -204,7 +204,7 @@ Given positive integers, find the minimum-length contiguous subarray whose sum i
 
 **Why:** ?
 
-fixed window of variable size, we dont know the size of the window but we know that input array is all positive elements so we know that when we subtract any element sum will reduce and if we add any element sum will increase.
+variable sized window, we dont know the size of the window but we know that input array is all positive elements so we know that when we subtract any element sum will reduce and if we add any element sum will increase.
 
 ---
 
@@ -611,7 +611,7 @@ Which one would you choose if you need to preserve the original array order?
 
 Why?
 
-to preserve the original order i would prefer hashset, cause even tho we would have sc-O(n) but we would be able to see if there are duplicates in array much faster in O(n) time rather than sorting with O(log n) then traversing the array(O(n)) and not preserving the order of original array
+to preserve the original order i would prefer hashset, cause even tho we would have sc-O(n) but we would be able to see if there are duplicates in array much faster in O(n) time rather than sorting with O(nlog n) then traversing the array(O(n)) and not preserving the order of original array
 
 ---
 
