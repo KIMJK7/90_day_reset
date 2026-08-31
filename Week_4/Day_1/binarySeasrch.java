@@ -1,4 +1,4 @@
-package Week_4;
+package Week_4.Day_1;
 
 public class binarySeasrch {
     // nums[mid] < target
