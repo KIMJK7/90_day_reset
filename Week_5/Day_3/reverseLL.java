@@ -40,5 +40,27 @@ public class reverseLL {
             head.next = null;
             return newHead;
         }
+
+        Node reverseBetween(Node head, int left, int right) {
+            Node dummy = new Node(0);
+            dummy.next = head;
+
+            Node prev = dummy;
+            for (int i = 0; i < left; i++) {
+                prev = prev.next;
+            }
+
+            Node curr = prev.next;
+
+            for (int i = 0; i < right - left; i++) {
+                Node front = curr.next;
+                curr.next = front.next;
+                front.next = curr;
+                curr = front;
+            }
+
+            return head;
+
+        }
     }
 }
