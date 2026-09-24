@@ -105,5 +105,42 @@ public class reverseLL {
 
             return true;
         }
+
+        // 1->2->3->4->5
+        // output 1->5->2->4->3 (first->last->second->second_last->...)
+        static void reorderList(Node head) {
+            Node slow = head;
+            Node fast = head;
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            // slow is middle
+            // sperate the two halves
+            Node second = slow.next;
+            slow.next = null;
+
+            Node prev = null;
+            Node curr = second;
+            while (curr != null) {
+                Node front = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = front;
+            }
+
+            // prev is newhead of reversed linked list
+            // merge both linked list
+            Node first = head;
+            second = prev;
+            while (second != null) {
+                Node firstNext = first.next;
+                Node secondNext = second.next;
+                first.next = second;
+                second.next = firstNext;
+                first = firstNext;
+                second = secondNext;
+            }
+        }
     }
 }
