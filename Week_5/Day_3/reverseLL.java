@@ -55,12 +55,55 @@ public class reverseLL {
             for (int i = 0; i < right - left; i++) {
                 Node front = curr.next;
                 curr.next = front.next;
-                front.next = curr;
+                front.next = prev.next;
+                prev.next = front;
+            }
+
+            return dummy.next;
+
+        }
+
+        static boolean isPalindrome(Node head) {
+            Node fast = head;
+            Node slow = head;
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            // slow is in middle
+
+            // reverse 2nd half
+            Node prev = null;
+            Node curr = slow;
+
+            while (curr != null) {
+                Node front = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = front;
+            }
+            Node first = head;
+            Node second = prev;
+            while (second != null) {
+                if (first.data != second.data) {
+                    return false;
+                }
+                first = first.next;
+                second = second.next;
+            }
+
+            // retore linked list to original;
+            // new head of linked list is stored in prev;
+            Node back = null; // first is the end of first half
+            curr = prev;
+            while (curr != null) {
+                Node front = curr.next;
+                curr.next = back;
+                back = curr;
                 curr = front;
             }
 
-            return head;
-
+            return true;
         }
     }
 }
